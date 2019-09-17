@@ -11,7 +11,7 @@
 #' linreg(formula=Petal.Length~Species, data=iris)
 #' 
 #' @references #TODO#
-#' @importFrom #TODO#
+#' @importFrom stats median model.matrix pt quantile
 #'
 #' @export
 #'
