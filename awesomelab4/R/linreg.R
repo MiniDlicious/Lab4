@@ -72,9 +72,3 @@ linreg <- function(formula, data){
   model$call <- paste("lm(formula=", name_dep, "~", all.vars(formula)[-1] , ", data=", "data" , ")")
   return(model)
 }
-data(iris)
-linreg(formula=Petal.Length~Species, data=iris)
-
-mod_object <- lm(Petal.Length~Species, data = iris)
-mod_object
-summary(mod_object)
