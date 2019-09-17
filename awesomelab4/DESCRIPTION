@@ -1,0 +1,17 @@
+Package: awesomelab4
+Type: Package
+Title: Linear Regression Package
+Version: 1.0.0
+Date: 2019-09-11
+Authors@R: as.person(c(
+    "Martin Svensson <martin.k.r.svensson@gmail.com> [aut, cre]", 
+    "Laura Julià Melis <laaurajulia@gmail.com> [aut]"
+  ))
+Description: This package TODO.
+License: MIT + file LICENSE
+Encoding: UTF-8
+RoxygenNote: 6.1.1
+Depends: R (>= 3.5.0)
+Suggests: 
+    roxygen2,
+    testthat
