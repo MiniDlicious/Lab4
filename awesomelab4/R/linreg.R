@@ -58,17 +58,27 @@ linreg <- function(formula, data){
   p_values
   
   ## 3. Output:
-  residuals <- c(min(e_hat), quantile(e_hat,0.25), median(e_hat),quantile(e_hat,0.75),max(e_hat))
-  names(residuals) <- c("Min","1Q","Median","3Q","Max")
-  
-  coef <- cbind(beta_hat, std_error, t_values, p_values)
-  colnames(coef) <- c("Estimate", "Std. Error", "t value", "Pr(>|t|)")
-  
-  #text <- cat("Residual standard error:", RSE, "on", df , "degrees of freedom")
-  
-  model <- list()
-  class(model) <- "lm"
-  model$coefficients <- coef
-  model$call <- paste("lm(formula=", name_dep, "~", all.vars(formula)[-1] , ", data=", "data" , ")")
-  return(model)
+  # residuals <- c(min(e_hat), quantile(e_hat,0.25), median(e_hat),quantile(e_hat,0.75),max(e_hat))
+  # names(residuals) <- c("Min","1Q","Median","3Q","Max")
+  # 
+  # coef <- cbind(beta_hat, std_error, t_values, p_values)
+  # colnames(coef) <- c("Estimate", "Std. Error", "t value", "Pr(>|t|)")
+  # 
+  # #text <- cat("Residual standard error:", RSE, "on", df , "degrees of freedom")
+  # 
+  # model <- list()
+  # class(model) <- "lm"
+  # model$coefficients <- coef
+  # model$call <- paste("lm(formula=", name_dep, "~", all.vars(formula)[-1] , ", data=", "data" , ")")
+  # #return(model)
+  # return(linreg$new(
+  #   regression_coefficients=beta_hat,
+  #   fitted_values=y_hat,
+  #   residuals=e_hat,
+  #   degrees_of_freedom=df,
+  #   residual_variance=sigma2_hat,
+  #   variance_of_coefficients=var_hat,
+  #   t_values=t_values,
+  #   p_values=p_values))
+  return(c(beta_hat, y_hat, e_hat, df, sigma2_hat, var_hat, t_values, p_values))
 }
