@@ -14,7 +14,7 @@
 #' 
 #' @examples
 #' data("iris")
-#' linreg$new(formula=Petal.Length~Species, data=iris)
+#' example <- linreg$new(formula=Petal.Length~Species, data=iris)
 #' 
 #' @references #TODO#
 #' @importFrom methods new
@@ -83,7 +83,11 @@ linreg <- setRefClass ("linreg",
       "Modifies the print() function for class."
       coeff <- matrix(c(names(std_error), regression_coefficients), ncol=3)
       colnames(coeff) <- colnames(t_values)
-      print(coeff)
+      return(coeff)
+    },
+    print = function() {
+      "Same as show, but allows for linreg$print(). Will break print(linreg) that show allows, bad test case!"
+      show()
     },
     resid = function(){
       "Returns the residuals."

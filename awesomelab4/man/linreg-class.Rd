@@ -43,6 +43,8 @@ A Reference Class.
 
 \item{\code{pred()}}{Returns the predictions.}
 
+\item{\code{print()}}{Same as show, but allows for linreg$print(). Will break print(linreg) that show allows, bad test case!}
+
 \item{\code{resid()}}{Returns the residuals.}
 
 \item{\code{summary()}}{Prints a summary for the calculated data.}
@@ -50,7 +52,7 @@ A Reference Class.
 
 \examples{
 data("iris")
-linreg$new(formula=Petal.Length~Species, data=iris)
+example <- linreg$new(formula=Petal.Length~Species, data=iris)
 
 }
 \references{
