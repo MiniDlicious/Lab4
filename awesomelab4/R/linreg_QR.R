@@ -49,6 +49,7 @@ linreg <- function(formula, data){
   
   # The variance of the regression coefficients:
   var_hat <- diag(solve(t(R)%*%R) * sigma2_hat) # Var(beta_hat)= (R^T * R)^(-1) * sigma_hat^2
+  std_error <- t(sqrt(var_hat))    # Std. Errors
   
   # The t-values for each coefficient:
   t_values <- beta_hat / std_error
