@@ -1,3 +1,27 @@
+#' A Reference Class.
+#'
+#' @field formula TODO
+#' @field data TODO
+#' @field regression_coefficients TODO
+#' @field fitted_values TODO
+#' @field residuals TODO
+#' @field degrees_of_freedom TODO
+#' @field residual_variance TODO
+#' @field variance_of_coefficients TODO
+#' @field std_error TODO
+#' @field t_values TODO
+#' @field p_values TODO
+#' 
+#' @examples
+#' data("iris")
+#' linreg(formula=Petal.Length~Species, data=iris)
+#' 
+#' @references #TODO#
+#' @importFrom #TODO#
+#'
+#' @export
+#'
+
 linreg <- setRefClass ("linreg",
   fields = c (
     formula = "formula",
@@ -13,6 +37,7 @@ linreg <- setRefClass ("linreg",
     p_values = "ANY"),
   methods = c (
     initialize = function(formula, data){
+      "Initialize function calculates all values needed from formula and data."
       ## 0. Check that the class of the formula argument is correct:
       stopifnot(class(formula) == "formula")
       
@@ -54,19 +79,27 @@ linreg <- setRefClass ("linreg",
       return(NULL)
     },
     show = function() {
+      "Modifies the print() function for class."
       coeff <- matrix(c(names(std_error), regression_coefficients), ncol=3)
       colnames(coeff) <- colnames(t_values)
       print(coeff)
     },
     resid = function(){
+      "Returns the residuals."
       residual_list <- c(min(residuals), quantile(residuals,0.25), median(residuals),quantile(residuals,0.75),max(residuals))
       names(residual_list) <- c("Min","1Q","Median","3Q","Max")
       return(residual_list)
     },
     pred = function(){
+      "Returns the predictions."
       return(fitted_values)
     },
+    coef = function(){
+      "Returns the coefficients."
+      return(regression_coefficients)
+    },
     summary = function() {
+      "Prints a summary for the calculated data."
       coef <- cbind(regression_coefficients, std_error[1,], t_values[1,], p_values[1,])
       colnames(coef) <- c("Estimate", "Std. Error", "t value", "Pr(>|t|)")
       print(coef)
@@ -74,18 +107,18 @@ linreg <- setRefClass ("linreg",
   )
 )
 
-customer <- setRefClass ("customer",
-   fields = c(
-     money = "ANY"),
-   methods = c(
-     initialize = function(money){
-       money <<- money * 2
-     },
-     add_funds = function(amount){
-       money <<- money + amount
-     },
-     show = function(){
-       print("Money is not infinite")
-     }
-   )
-)
+# customer <- setRefClass ("customer",
+#    fields = c(
+#      money = "ANY"),
+#    methods = c(
+#      initialize = function(money){
+#        money <<- money * 2
+#      },
+#      add_funds = function(amount){
+#        money <<- money + amount
+#      },
+#      show = function(){
+#        print("Money is not infinite")
+#      }
+#    )
+# )
