@@ -15,9 +15,7 @@ VignetteBuilder: knitr
 Depends: R (>= 3.5.0)
 Imports: 
     methods,
-    ggplot2,
-    png,
-    grid
+    ggplot2
 Suggests: 
     roxygen2,
     testthat,
