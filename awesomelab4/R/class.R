@@ -19,8 +19,6 @@
 #' @references #TODO#
 #' @importFrom methods new
 #' @importFrom ggplot2 ggplot
-#' @importFrom png readPNG
-#' @importFrom grid rasterGrob
 #'
 #' @export linreg
 #' @exportClass linreg
@@ -38,12 +36,22 @@ linreg <- setRefClass ("linreg",
     variance_of_coefficients = "ANY",
     std_error = "ANY",
     t_values = "ANY",
-    p_values = "ANY"),
+    p_values = "ANY",
+    arguments = "ANY"),
   methods = c (
     initialize = function(formula, data){
       "Initialize function calculates all values needed from formula and data."
       ## 0. Check that the class of the formula argument is correct:
       stopifnot(class(formula) == "formula")
+      #base::print(as.list(sys.calls()))
+      # Extract arguments
+      arg_string <- as.character(as.list(sys.calls())[[1]])
+      #arg_string <- gsub(" ", "", arg_string, fixed = TRUE)
+      
+      #formula_pattern <- "(?<=\\([^\\w\\=])(.*)(?=\\,)|(?<=\\=)(.*)(?=\\,)"
+      #data_pattern <- "(?<=\\,)([^data].*)(?=\\))|(?<=\\=)(.*)(?=\\))"
+      arguments <<- c(arg_string[2], arg_string[3])
+      base::print(arguments)
       
       ## 1. Initialization
       x <- model.matrix(formula, data) # X matrix (independent variables)
@@ -82,15 +90,22 @@ linreg <- setRefClass ("linreg",
       p_values <<- 2*abs(pt(t_values, degrees_of_freedom, log.p = T))
       return(NULL)
     },
-    show = function() {
-      "Modifies the print() function for class."
-      coeff <- matrix(c(names(std_error), regression_coefficients), ncol=3)
-      colnames(coeff) <- colnames(t_values)
-      return(coeff)
-    },
+    # show = function() {
+    #   "Modifies the print() function for class."
+    #   coeff <- matrix(c(names(std_error), regression_coefficients), ncol=3)
+    #   colnames(coeff) <- colnames(t_values)
+    #   return(coeff)
+    # },
     print = function() {
       "Same as show, but allows for linreg$print(). Will break print(linreg) that show allows, bad test case!"
-      show()
+      coeff <- matrix(c(names(std_error), regression_coefficients), ncol=3)
+      colnames(coeff) <- colnames(t_values)
+      #base::print(arguments)
+      model <- list()
+      #class(model) <- "linreg"
+      model$coefficients <- coef
+      model$call <- paste("linreg(formula=", arguments[1] , ", data=", arguments[2] , ")")
+      return(model)
     },
     plot = function(){
       liu_theme <- theme_bw() + theme(
@@ -115,7 +130,7 @@ linreg <- setRefClass ("linreg",
       "Returns the residuals."
       residual_list <- c(min(residuals), quantile(residuals,0.25), median(residuals),quantile(residuals,0.75),max(residuals))
       names(residual_list) <- c("Min","1Q","Median","3Q","Max")
-      return(residual_list)
+      return(residuals)
     },
     pred = function(){
       "Returns the predictions."
