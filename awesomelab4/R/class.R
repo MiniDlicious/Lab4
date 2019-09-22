@@ -18,6 +18,7 @@
 #' 
 #' @references #TODO#
 #' @importFrom methods new
+#' @importFrom ggplot2 ggplot
 #'
 #' @export linreg
 #' @exportClass linreg
@@ -88,6 +89,10 @@ linreg <- setRefClass ("linreg",
     print = function() {
       "Same as show, but allows for linreg$print(). Will break print(linreg) that show allows, bad test case!"
       show()
+    },
+    plot = function(){
+      df <- data.frame(residuals, fitted_values)
+      ggplot(df, aes(y=residuals, x=fitted_values)) + geom_point()
     },
     resid = function(){
       "Returns the residuals."

@@ -11,8 +11,13 @@ Description: This package TODO.
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 6.1.1
+VignetteBuilder: knitr
 Depends: R (>= 3.5.0)
-Imports: methods
+Imports: 
+    methods,
+    ggplot2
 Suggests: 
     roxygen2,
-    testthat
+    testthat,
+    knitr,
+    rmarkdown

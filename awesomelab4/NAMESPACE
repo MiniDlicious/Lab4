@@ -2,4 +2,5 @@
 
 export(linreg)
 exportClasses(linreg)
+importFrom(ggplot2,ggplot)
 importFrom(methods,new)
