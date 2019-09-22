@@ -19,6 +19,8 @@
 #' @references #TODO#
 #' @importFrom methods new
 #' @importFrom ggplot2 ggplot
+#' @importFrom png readPNG
+#' @importFrom grid rasterGrob
 #'
 #' @export linreg
 #' @exportClass linreg
@@ -91,8 +93,23 @@ linreg <- setRefClass ("linreg",
       show()
     },
     plot = function(){
+      liu_theme <- theme_bw() + theme(
+        plot.title = element_text(color = "#00b9e7"),
+        panel.background = element_rect(fill = "#c7e6e3", colour = "#17c7d2",
+                                        size = 2, linetype = "solid"),
+        panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                        colour = "white"), 
+        panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                        colour = "white"),
+        #scale_color_manual(values=c('#ff6442','#8781d3', '#fcf05f', '#687f91')),
+        legend.title = element_text(face = "bold"),
+        legend.position = "bottom",
+        axis.text.x = element_text(color="#687f91"),
+        axis.text.y = element_text(color="#687f91")
+        )
+      
       df <- data.frame(residuals, fitted_values)
-      ggplot(df, aes(y=residuals, x=fitted_values)) + geom_point()
+      ggplot(df, aes(y=residuals, x=fitted_values)) + geom_point() + ggtitle("Some plot") + liu_theme
     },
     resid = function(){
       "Returns the residuals."
