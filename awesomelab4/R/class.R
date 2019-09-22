@@ -145,7 +145,7 @@ linreg <- setRefClass ("linreg",
       "Prints a summary for the calculated data."
       coef <- cbind(regression_coefficients, std_error[1,], t_values[1,], p_values[1,])
       colnames(coef) <- c("Estimate", "Std. Error", "t value", "Pr(>|t|)")
-      print(coef)
+      return(coef)
     }
   )
 )
