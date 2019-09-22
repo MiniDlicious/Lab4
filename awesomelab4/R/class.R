@@ -14,12 +14,13 @@
 #' 
 #' @examples
 #' data("iris")
-#' linreg(formula=Petal.Length~Species, data=iris)
+#' linreg$new(formula=Petal.Length~Species, data=iris)
 #' 
 #' @references #TODO#
-#' @importFrom #TODO#
+#' @importFrom methods new
 #'
-#' @export
+#' @export linreg
+#' @exportClass linreg
 #'
 
 linreg <- setRefClass ("linreg",
