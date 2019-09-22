@@ -54,14 +54,22 @@ linreg <- setRefClass ("linreg",
       return(NULL)
     },
     show = function() {
-      coef <- cbind(regression_coefficients, std_error, t_values, p_values)
-      colnames(coef) <- c("Estimate", "Std. Error", "t value", "Pr(>|t|)")
-      return(coef)
+      coeff <- matrix(c(names(std_error), regression_coefficients), ncol=3)
+      colnames(coeff) <- colnames(t_values)
+      print(coeff)
     },
     resid = function(){
       residual_list <- c(min(residuals), quantile(residuals,0.25), median(residuals),quantile(residuals,0.75),max(residuals))
       names(residual_list) <- c("Min","1Q","Median","3Q","Max")
       return(residual_list)
+    },
+    pred = function(){
+      return(fitted_values)
+    },
+    summary = function() {
+      coef <- cbind(regression_coefficients, std_error[1,], t_values[1,], p_values[1,])
+      colnames(coef) <- c("Estimate", "Std. Error", "t value", "Pr(>|t|)")
+      print(coef)
     }
   )
 )
