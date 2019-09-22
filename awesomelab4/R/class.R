@@ -103,8 +103,9 @@ linreg <- setRefClass ("linreg",
       #base::print(arguments)
       model <- list()
       #class(model) <- "linreg"
+      
+      model$call <- paste("linreg(formula = ", arguments[1], ", data = ", arguments[2], ")", sep="")
       model$coefficients <- coef
-      model$call <- paste("linreg(formula=", arguments[1] , ", data=", arguments[2] , ")")
       return(model)
     },
     plot = function(){
