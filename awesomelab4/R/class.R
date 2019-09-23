@@ -166,7 +166,7 @@ linreg <- setRefClass ("linreg",
       colnames(coef) <- c("Estimate", "Std. Error", "t value", "Pr(>|t|)", "Significance")
       base::print(coef)
       
-      base::print("Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1")
+      base::print("Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1")
       rse <- sqrt(sum(residuals**2)/degrees_of_freedom)
       base::print(paste("Residual standard error: ", rse, " on ", degrees_of_freedom, " degrees of freedom", sep=""))
     }
