@@ -95,7 +95,8 @@ linreg <- setRefClass ("linreg",
       t_values <<- regression_coefficients / std_error
       
       # The p-values for each coefficient:
-      p_values <<- 2*abs(pt(t_values, degrees_of_freedom, log.p = T))
+      #p_values <<- 2*abs(pt(t_values, degrees_of_freedom, log.p = T))
+      p_values <<- pt(-abs(t_values), degrees_of_freedom)
       return(NULL)
     },
     show = function() {
@@ -147,10 +148,25 @@ linreg <- setRefClass ("linreg",
     },
     summary = function() {
       "Prints a summary for the calculated data."
-      coef <- cbind(regression_coefficients, std_error[1,], t_values[1,], p_values[1,])
-      colnames(coef) <- c("Estimate", "Std. Error", "t value", "Pr(>|t|)")
+      .categorise_significance <- function(x){
+        if(x < 0.001){
+          return("***")
+        }else if(x < 0.01){
+          return("**")
+        }else if(x < 0.05){
+          return("*")
+        }else if(x < 0.1){
+          return(".")
+        }else{
+          return(" ")
+        }
+      }
+      significance <- lapply(as.vector(p_values), .categorise_significance)
+      coef <- cbind(regression_coefficients, std_error[1,], t_values[1,], p_values[1,], significance)
+      colnames(coef) <- c("Estimate", "Std. Error", "t value", "Pr(>|t|)", "Significance")
       base::print(coef)
       
+      base::print("Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1")
       rse <- sqrt(sum(residuals**2)/degrees_of_freedom)
       base::print(paste("Residual standard error: ", rse, " on ", degrees_of_freedom, " degrees of freedom", sep=""))
     }
