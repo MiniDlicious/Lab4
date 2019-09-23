@@ -46,7 +46,6 @@ linreg <- setRefClass ("linreg",
       #base::print(as.list(sys.calls()))
       # Extract arguments
       arg_string <- as.character(as.list(sys.calls())[[1]])
-      #arg_string <- gsub(" ", "", arg_string, fixed = TRUE)
       
       #formula_pattern <- "(?<=\\([^\\w\\=])(.*)(?=\\,)|(?<=\\=)(.*)(?=\\,)"
       #data_pattern <- "(?<=\\,)([^data].*)(?=\\))|(?<=\\=)(.*)(?=\\))"
@@ -104,9 +103,9 @@ linreg <- setRefClass ("linreg",
       model <- list()
       #class(model) <- "linreg"
       
-      model$call <- paste("linreg(formula = ", arguments[1], ", data = ", arguments[2], ")", sep="")
-      model$coefficients <- coef
-      return(model)
+      model$Call <- paste("linreg(formula = ", arguments[1], ", data = ", arguments[2], ")", sep="")
+      model$Coefficients <- coef
+      base::print(model)
     },
     plot = function(){
       liu_theme <- theme_bw() + theme(
