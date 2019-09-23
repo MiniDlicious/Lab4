@@ -45,12 +45,21 @@ linreg <- setRefClass ("linreg",
       stopifnot(class(formula) == "formula")
       #base::print(as.list(sys.calls()))
       # Extract arguments
-      arg_string <- as.character(as.list(sys.calls())[[1]])
+      #arg_string <- as.character(as.list(sys.calls())[[1]]) # only works for user, not for testthat or R CMD Check
+      arg_string <- paste(as.list(sys.calls()), collapse='')
+      #formula_pattern <- "(?<=(linreg\$new\())([^,=]*)(?=\,.*\))|(?<=(linreg\$new*\((formula)=))([^,]*)(?=\,.*\))"
+      #data_pattern <- "(?<=(linreg\\$new.*\\(.*)(data).*=?)(\\w+)(?=\\))|(?<=(linreg\\$new.*\\(.*),)(\\w+)(?=\\))"
       
-      #formula_pattern <- "(?<=\\([^\\w\\=])(.*)(?=\\,)|(?<=\\=)(.*)(?=\\,)"
-      #data_pattern <- "(?<=\\,)([^data].*)(?=\\))|(?<=\\=)(.*)(?=\\))"
-      arguments <<- c(arg_string[2], arg_string[3])
-      base::print(arguments)
+      # Extract function call
+      function_pattern <- "linreg\\$new\\(.*?\\)"
+      function_call <- regmatches(arg_string, regexpr(function_pattern, arg_string, perl = TRUE))
+      
+      # From function call, extract data argument
+      data_pattern <- "(\\w+)(?=\\))"
+      data_argument <- regmatches(function_call, regexpr(data_pattern, function_call, perl = TRUE))
+      
+      # Save arguments
+      arguments <<- c(formula, data_argument)
       
       ## 1. Initialization
       x <- model.matrix(formula, data) # X matrix (independent variables)
@@ -89,22 +98,18 @@ linreg <- setRefClass ("linreg",
       p_values <<- 2*abs(pt(t_values, degrees_of_freedom, log.p = T))
       return(NULL)
     },
-    # show = function() {
-    #   "Modifies the print() function for class."
-    #   coeff <- matrix(c(names(std_error), regression_coefficients), ncol=3)
-    #   colnames(coeff) <- colnames(t_values)
-    #   return(coeff)
-    # },
+    show = function() {
+      "Modifies the print() function for class."
+      base::print("Use ...$print()")
+    },
     print = function() {
       "Same as show, but allows for linreg$print(). Will break print(linreg) that show allows, bad test case!"
       coeff <- matrix(c(names(std_error), regression_coefficients), ncol=3)
       colnames(coeff) <- colnames(t_values)
-      #base::print(arguments)
-      model <- list()
-      #class(model) <- "linreg"
       
+      model <- list()
       model$Call <- paste("linreg(formula = ", arguments[1], ", data = ", arguments[2], ")", sep="")
-      model$Coefficients <- coef
+      model$Coefficients <- coeff
       base::print(model)
     },
     plot = function(){
@@ -144,7 +149,10 @@ linreg <- setRefClass ("linreg",
       "Prints a summary for the calculated data."
       coef <- cbind(regression_coefficients, std_error[1,], t_values[1,], p_values[1,])
       colnames(coef) <- c("Estimate", "Std. Error", "t value", "Pr(>|t|)")
-      return(coef)
+      base::print(coef)
+      
+      rse <- sqrt(sum(residuals**2)/degrees_of_freedom)
+      base::print(paste("Residual standard error: ", rse, " on ", degrees_of_freedom, " degrees of freedom", sep=""))
     }
   )
 )
