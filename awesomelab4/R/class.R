@@ -130,7 +130,7 @@ linreg <- setRefClass ("linreg",
         )
       
       df <- data.frame(residuals, fitted_values)
-      ggplot(df, aes(y=residuals, x=fitted_values)) + geom_point() + ggtitle("Some plot") + liu_theme
+      ggplot(df, aes(y=residuals, x=fitted_values)) + geom_point() + geom_line(aes(y = mean(residuals), x= fitted_values, colour="red")) + ggtitle("Residuals vs Fitted") + liu_theme
     },
     resid = function(){
       "Returns the residuals."
