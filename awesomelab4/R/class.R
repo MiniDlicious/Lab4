@@ -147,8 +147,6 @@ linreg <- setRefClass ("linreg",
       },
     resid = function(){
       "Returns the residuals."
-      residual_list <- c(min(residuals), quantile(residuals,0.25), median(residuals),quantile(residuals,0.75),max(residuals))
-      names(residual_list) <- c("Min","1Q","Median","3Q","Max")
       return(residuals)
     },
     pred = function(){
