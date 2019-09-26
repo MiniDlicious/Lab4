@@ -31,6 +31,7 @@ linreg <- setRefClass ("linreg",
     regression_coefficients = "ANY", 
     fitted_values = "ANY",
     residuals = "ANY",
+    std_residuals = "ANY",
     degrees_of_freedom = "ANY",
     residual_variance = "ANY",
     variance_of_coefficients = "ANY",
@@ -80,6 +81,7 @@ linreg <- setRefClass ("linreg",
       
       # The residuals:
       residuals <<- y - (x %*% regression_coefficients)
+      std_residuals <<- residuals/(sqrt((1/(nrow(data)-1))*sum(residuals^2)))
       
       # The degrees of freedom:
       degrees_of_freedom <<- nrow(data) - ncol(x) # number of observations - number of parameters in the model
@@ -129,9 +131,11 @@ linreg <- setRefClass ("linreg",
         axis.text.y = element_text(color="#687f91")
         )
       
-      df <- data.frame(residuals, fitted_values)
-      ggplot(df, aes(y=residuals, x=fitted_values)) + geom_point() + geom_line(aes(y = mean(residuals), x= fitted_values, colour="red")) + ggtitle("Residuals vs Fitted") + liu_theme
-    },
+      df <- data.frame(residuals, std_residuals, fitted_values)
+      plot1 <- ggplot(df, aes(y=residuals, x=fitted_values)) + geom_point() + geom_line(aes(y = mean(residuals), x= fitted_values, colour="red")) + ggtitle("Residuals vs Fitted") + xlab("Fitted values") + ylab("Residuals") + liu_theme
+      plot2 <- ggplot(df, aes(y=std_residuals, x=fitted_values)) + geom_point() + geom_line(aes(y = mean(std_residuals), x= fitted_values, colour="red")) + ggtitle("Scale-Location") + xlab("Fitted values") + ylab(expression(sqrt("|Standardized residuals|"))) + liu_theme
+      plot_grid(plot1, plot2, labels = "AUTO")
+      },
     resid = function(){
       "Returns the residuals."
       residual_list <- c(min(residuals), quantile(residuals,0.25), median(residuals),quantile(residuals,0.75),max(residuals))
