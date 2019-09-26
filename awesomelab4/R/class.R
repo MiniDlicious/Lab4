@@ -1,22 +1,31 @@
 #' A Reference Class.
 #'
-#' @field formula TODO
-#' @field data TODO
-#' @field regression_coefficients TODO
-#' @field fitted_values TODO
-#' @field residuals TODO
-#' @field degrees_of_freedom TODO
-#' @field residual_variance TODO
-#' @field variance_of_coefficients TODO
-#' @field std_error TODO
-#' @field t_values TODO
-#' @field p_values TODO
+#' \code{linreg()} calculates a number of statistics (see section \code{"Fields"}) by default given both arguments: formula and data. 
+#' It also stores diverse functions implemented using RC object oriented programming. Find more information regarding these functions on section \code{"Methods"}.
+#' 
+#'
+#' @field formula an object of class "formula".
+#' @field data a data frame.
+#' @field regression_coefficients the regression coefficients of the model calculated using the QR decomposition.
+#' @field fitted_values the fitted values.
+#' @field residuals the residuals. It is the difference between the real values and the fitted values.
+#' @field degrees_of_freedom the degrees of freedom: the number of observations minus the number of parameters in the model.
+#' @field residual_variance the residual variance. 
+#' @field variance_of_coefficients the variance of the regression coefficients.
+#' @field std_error the standard error of the regression coefficients. It is the square root of the variance.
+#' @field t_values the t-values for each coefficient.
+#' @field p_values the p-values for each coefficient.
 #' 
 #' @examples
 #' data("iris")
 #' example <- linreg$new(formula=Petal.Length~Species, data=iris)
 #' 
-#' @references #TODO#
+#' @references Reference Classes: \url{http://adv-r.had.co.nz/R5.html}
+#' 
+#' QR decomposition: \url{https://en.wikipedia.org/wiki/QR_decomposition}
+#' 
+#' Vignettes: \url{http://r-pkgs.had.co.nz/vignettes.html}
+#' 
 #' @importFrom methods new
 #' @importFrom ggplot2 ggplot
 #'

@@ -6,32 +6,33 @@
 \alias{linreg}
 \title{A Reference Class.}
 \description{
-A Reference Class.
+\code{linreg()} calculates a number of statistics (see section \code{"Fields"}) by default given both arguments: formula and data. 
+It also stores diverse functions implemented using RC object oriented programming. Find more information regarding these functions on section \code{"Methods"}.
 }
 \section{Fields}{
 
 \describe{
-\item{\code{formula}}{TODO}
+\item{\code{formula}}{an object of class "formula".}
 
-\item{\code{data}}{TODO}
+\item{\code{data}}{a data frame.}
 
-\item{\code{regression_coefficients}}{TODO}
+\item{\code{regression_coefficients}}{the regression coefficients of the model calculated using the QR decomposition.}
 
-\item{\code{fitted_values}}{TODO}
+\item{\code{fitted_values}}{the fitted values.}
 
-\item{\code{residuals}}{TODO}
+\item{\code{residuals}}{the residuals. It is the difference between the real values and the fitted values.}
 
-\item{\code{degrees_of_freedom}}{TODO}
+\item{\code{degrees_of_freedom}}{the degrees of freedom: the number of observations minus the number of parameters in the model.}
 
-\item{\code{residual_variance}}{TODO}
+\item{\code{residual_variance}}{the residual variance.}
 
-\item{\code{variance_of_coefficients}}{TODO}
+\item{\code{variance_of_coefficients}}{the variance of the regression coefficients.}
 
-\item{\code{std_error}}{TODO}
+\item{\code{std_error}}{the standard error of the regression coefficients. It is the square root of the variance.}
 
-\item{\code{t_values}}{TODO}
+\item{\code{t_values}}{the t-values for each coefficient.}
 
-\item{\code{p_values}}{TODO}
+\item{\code{p_values}}{the p-values for each coefficient.}
 }}
 
 \section{Methods}{
@@ -56,5 +57,9 @@ example <- linreg$new(formula=Petal.Length~Species, data=iris)
 
 }
 \references{
-#TODO#
+Reference Classes: \url{http://adv-r.had.co.nz/R5.html}
+
+QR decomposition: \url{https://en.wikipedia.org/wiki/QR_decomposition}
+
+Vignettes: \url{http://r-pkgs.had.co.nz/vignettes.html}
 }
