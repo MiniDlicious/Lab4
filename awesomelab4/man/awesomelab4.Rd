@@ -4,13 +4,15 @@
 \name{awesomelab4}
 \alias{awesomelab4}
 \alias{awesomelab4-package}
-\title{awesomelab4: Creating a linear regression package.}
+\title{awesomelab4: A linear regression package.}
 \description{
-TODO
+The awesomelab4 package contains an object with class \code{linreg}, created with the RC object oriented system.
+This object is helpful to handle linear regression models as it provides multiple methods such as \code{resid()} and
+\code{coef()} to obtain the vector of residuals and the regressions coefficients of a given regression model, respectively.
 }
-\section{Functions}{
+\section{Class object}{
 
-\code{placeholder()} returns scalars a and b.
+\code{linreg()} calculates various statistics related to the linear regression model and contains multiple methods to obtain the regression coefficients or the predicted values, among others.
 }
 
 \author{
