@@ -135,7 +135,7 @@ linreg <- setRefClass ("linreg",
                                         colour = "white"),
         #scale_color_manual(values=c('#ff6442','#8781d3', '#fcf05f', '#687f91')),
         legend.title = element_text(face = "bold"),
-        legend.position = "bottom",
+        legend.position = "none",
         axis.text.x = element_text(color="#687f91"),
         axis.text.y = element_text(color="#687f91")
         )
