@@ -142,7 +142,7 @@ linreg <- setRefClass ("linreg",
       
       df <- data.frame(residuals, std_residuals, fitted_values)
       plot1 <- ggplot(df, aes(y=residuals, x=fitted_values)) + geom_point() + geom_line(aes(y = mean(residuals), x= fitted_values, colour="red")) + ggtitle("Residuals vs Fitted") + xlab("Fitted values") + ylab("Residuals") + liu_theme
-      plot2 <- ggplot(df, aes(y=std_residuals, x=fitted_values)) + geom_point() + geom_line(aes(y = mean(std_residuals), x= fitted_values, colour="red")) + ggtitle("Scale-Location") + xlab("Fitted values") + ylab(expression(sqrt("|Standardized residuals|"))) + liu_theme
+      plot2 <- ggplot(df, aes(y=sqrt(abs(std_residuals)), x=fitted_values)) + geom_point() + geom_line(aes(y = mean(sqrt(abs(std_residuals))), x= fitted_values, colour="red")) + ggtitle("Scale-Location") + xlab("Fitted values") + ylab(expression(sqrt("|Standardized residuals|"))) + liu_theme
       plot_grid(plot1, plot2, labels = "AUTO")
       },
     resid = function(){
