@@ -2,5 +2,6 @@
 
 export(linreg)
 exportClasses(linreg)
+importFrom(cowplot,plot_grid)
 importFrom(ggplot2,ggplot)
 importFrom(methods,new)

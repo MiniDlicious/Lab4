@@ -28,6 +28,7 @@
 #' 
 #' @importFrom methods new
 #' @importFrom ggplot2 ggplot
+#' @importFrom cowplot plot_grid
 #'
 #' @export linreg
 #' @exportClass linreg
